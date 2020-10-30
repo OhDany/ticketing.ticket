@@ -1,7 +1,6 @@
-import { requireAuth } from '@odtickets/common';
 import request from 'supertest';
 import { app } from '../../app';
-import { Ticket } from '../../models/tickets';
+import { Ticket } from '../../models/ticket';
 
 it('has a route handler listening to /api/tickets for post requests', async () => {
   const response = await request(app).post('/api/tickets').send({});
@@ -13,7 +12,7 @@ it('can only be accessed if the user is signed in', async () => {
   await request(app).post('/api/tickets').send({}).expect(401);
 });
 
-it('returns a status other than 401 if the user is sign in', async () => {
+it('returns a status other than 401 if the user is signed in', async () => {
   const response = await request(app)
     .post('/api/tickets')
     .set('Cookie', global.signin())
@@ -64,7 +63,7 @@ it('creates a ticket with valid inputs', async () => {
   let tickets = await Ticket.find({});
   expect(tickets.length).toEqual(0);
 
-  const title = 'lsuew';
+  const title = 'asldkfj';
 
   await request(app)
     .post('/api/tickets')
@@ -77,6 +76,6 @@ it('creates a ticket with valid inputs', async () => {
 
   tickets = await Ticket.find({});
   expect(tickets.length).toEqual(1);
-  expect(tickets[0].title).toEqual(title);
   expect(tickets[0].price).toEqual(20);
+  expect(tickets[0].title).toEqual(title);
 });

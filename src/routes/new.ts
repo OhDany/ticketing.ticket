@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { requireAuth, ValidateRequest } from '@odtickets/common';
-import { Ticket } from '../models/tickets';
+import { requireAuth, validateRequest } from '@odtickets/common';
+import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.post(
       .isFloat({ gt: 0 })
       .withMessage('Price must be greater than 0'),
   ],
-  ValidateRequest,
+  validateRequest,
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
 
